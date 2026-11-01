@@ -8,6 +8,8 @@ on:
 jobs:
   build:
     runs-on: macos-15
+    permissions:
+      contents: write
     timeout-minutes: 120
     steps:
       - uses: actions/checkout@v4
@@ -31,6 +33,13 @@ jobs:
 
       - name: Show artifacts
         run: ls -lh build/*.ipa
+
+      - name: Publish release asset
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="ci-${{ github.run_number }}"
+          gh release create "$TAG" build/*.ipa --title "Dylix CI $TAG" --notes "Automated build" --repo "${{ github.repository }}" || gh release upload "$TAG" build/*.ipa --clobber --repo "${{ github.repository }}"
 
       - uses: actions/upload-artifact@v4
         with:
