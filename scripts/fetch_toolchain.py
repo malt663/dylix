@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Install the pinned, SDK-free Dylix toolchain. No external scripts are run."""
+"""Install the pinned, SDK-free theos助手 toolchain. No external scripts are run."""
 import argparse, hashlib, json, pathlib, shutil, tarfile, tempfile, urllib.request
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 p = argparse.ArgumentParser(description=__doc__)

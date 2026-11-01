@@ -13,7 +13,7 @@ struct TFActivityWidget: Widget {
             HStack(spacing: 12) {
                 Image(systemName: context.state.finished ? "checkmark.circle" : "sparkles").font(.title3)
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Dylix AI").font(.headline)
+                    Text("theos助手 AI").font(.headline)
                     Text(context.state.stage).font(.subheadline).foregroundStyle(.secondary).lineLimit(1)
                 }
                 Spacer()
@@ -22,7 +22,7 @@ struct TFActivityWidget: Widget {
              .widgetURL(URL(string: "tweakforge://ai"))
         } dynamicIsland: { context in
             DynamicIsland {
-                DynamicIslandExpandedRegion(.leading) { Label("Dylix", systemImage: "sparkles").font(.subheadline).lineLimit(1).minimumScaleFactor(0.75) }
+                DynamicIslandExpandedRegion(.leading) { Label("theos助手", systemImage: "sparkles").font(.subheadline).lineLimit(1).minimumScaleFactor(0.75) }
                 DynamicIslandExpandedRegion(.trailing) { if !context.state.finished { ProgressView().controlSize(.small).frame(width: 20, height: 20) } }
                 DynamicIslandExpandedRegion(.bottom) {
                     VStack(alignment: .leading, spacing: 8) {

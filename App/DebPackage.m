@@ -36,7 +36,7 @@ NSString *TMCControlForScheme(NSString *control,NSString *scheme){
 NSData *TMCDebPackage(NSData *dylib, NSString *name, NSString *bundleID, NSError **error) {return TMCDebPackageForScheme(dylib,name,bundleID,@"rootless",error);}
 NSData *TMCDebPackageForScheme(NSData *dylib, NSString *name, NSString *bundleID,NSString *scheme, NSError **error) {return TMCDebPackageForProject(dylib,name,bundleID,scheme,nil,@{},error);}
 NSData *TMCDebPackageForProject(NSData *dylib, NSString *name, NSString *bundleID,NSString *scheme, NSString *root, NSDictionary *config, NSError **error) {
-    NSString *control = [NSString stringWithFormat:@"Package: local.mobilecompiler.%@\nName: %@\nVersion: 1.0.0\nArchitecture: iphoneos-arm64\nMaintainer: Mobile Compiler\nSection: Tweaks\nDepends: mobilesubstrate, firmware (>= 15.0)\nDescription: Built locally by Mobile Compiler\n", name.lowercaseString, name];
+    NSString *control = [NSString stringWithFormat:@"Package: local.mobilecompiler.%@\nName: %@\nVersion: 1.0.0\nArchitecture: iphoneos-arm64\nMaintainer: nova\nSection: Tweaks\nDepends: mobilesubstrate, firmware (>= 15.0)\nDescription: Built locally by theos助手\n", name.lowercaseString, name];
     NSDictionary *filter = @{@"Filter": @{@"Bundles": @[bundleID ?: @"com.example.target"]}};
     NSData *plist = [NSPropertyListSerialization dataWithPropertyList:filter format:NSPropertyListXMLFormat_v1_0 options:0 error:error];
     return TMCDebPackageWithResources(dylib, name, plist, TMCControlForScheme(control,scheme), root, scheme, config, error);

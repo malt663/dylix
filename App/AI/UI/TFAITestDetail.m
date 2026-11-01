@@ -16,7 +16,7 @@ NSDictionary *TFAIRecordProbeResult(NSMutableDictionary *connection,NSString *ca
 }
 static NSString *TFValue(id obj){if([obj isKindOfClass:NSString.class])return obj;if([NSJSONSerialization isValidJSONObject:obj])return [[NSString alloc]initWithData:[NSJSONSerialization dataWithJSONObject:obj options:NSJSONWritingPrettyPrinted error:nil] encoding:NSUTF8StringEncoding];return obj?[obj description]:@"未记录";}
 NSString *TFAIProbeReport(NSDictionary *record,NSString *capability){
- NSDictionary *d=[record[@"diagnostics"] isKindOfClass:NSDictionary.class]?record[@"diagnostics"]:@{};NSMutableString *report=[NSMutableString stringWithFormat:@"Dylix · %@\n%@\n%@\n",TFProbeTitle(capability),TFProbeState(record[@"state"]),record[@"detail"]?:@"尚无测试记录"];
+ NSDictionary *d=[record[@"diagnostics"] isKindOfClass:NSDictionary.class]?record[@"diagnostics"]:@{};NSMutableString *report=[NSMutableString stringWithFormat:@"theos助手 · %@\n%@\n%@\n",TFProbeTitle(capability),TFProbeState(record[@"state"]),record[@"detail"]?:@"尚无测试记录"];
  NSArray *fields=@[@[@"timestamp",@"测试时间"],@[@"duration",@"耗时（秒）"],@[@"protocol",@"协议"],@[@"model",@"模型"],@[@"endpoint",@"请求地址"],@[@"httpStatus",@"HTTP状态"],@[@"requestSummary",@"测试内容"],@[@"expected",@"预期结果"],@[@"reason",@"判定原因"],@[@"responseText",@"模型实际回答"],@[@"responseBody",@"服务原始响应（截断并脱敏）"]];
  for(NSArray *f in fields)if(d[f[0]])[report appendFormat:@"\n%@\n%@\n",f[1],TFValue(d[f[0]])];
  if(record[@"saveWarning"])[report appendFormat:@"\n保存提示：%@\n",record[@"saveWarning"]];

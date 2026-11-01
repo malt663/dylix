@@ -7,7 +7,7 @@ static inline NSArray<NSString *> *TFAIDevelopmentGuideTopics(void) {
 
 static inline NSDictionary *TFAIDevelopmentGuideSchema(void) {
     return @{@"name":@"read_development_guide",
-             @"description":@"Read a built-in guide before the matching task; load only needed topics. headers: implement features from classdump/Objective-C headers and choose Hooks; logos: Hook syntax, ABI and lifecycle; build: Theos/Logos configuration and compile/crash diagnosis; deb/artifacts: deb packaging and Mach-O compatibility; binary: IPA classdump and dylib inspection; git: local versions and GitHub/Gitee sync; app: Dylix features, attachments and background execution. Knowledge only, no file access or permission changes. Reuse an existing guide result in this conversation.",
+             @"description":@"Read a built-in guide before the matching task; load only needed topics. headers: implement features from classdump/Objective-C headers and choose Hooks; logos: Hook syntax, ABI and lifecycle; build: Theos/Logos configuration and compile/crash diagnosis; deb/artifacts: deb packaging and Mach-O compatibility; binary: IPA classdump and dylib inspection; git: local versions and GitHub/Gitee sync; app: theos助手 features, attachments and background execution. Knowledge only, no file access or permission changes. Reuse an existing guide result in this conversation.",
              @"parameters":@{@"type":@"object",@"properties":@{@"topic":@{@"type":@"string",@"enum":TFAIDevelopmentGuideTopics()}},@"required":@[@"topic"],@"additionalProperties":@NO}};
 }
 
@@ -28,7 +28,7 @@ static inline NSDictionary *TFAIDevelopmentGuide(NSDictionary *arguments, NSErro
        "以headers指南核实的声明为依据，先检查现有.x/.xm、Makefile、过滤plist与初始化入口。Objective-C++语法和C++依赖使用.xm，避免把C++代码放入.m。%hook仅填写实际类名，区分类方法与实例方法，完整保留selector、返回值、参数及ABI；优先%orig保留原行为，不凭名称猜测方法用途。\n"
        "%ctor只做一次初始化；延迟加载镜像或可选类用分组和运行时存在检查，再决定%init。UI更新回到主线程，避免重复添加视图、约束和手势；delegate/block引用关注weak/strong与生命周期，方法观察日志应限频且可关闭。添加属性不等同于真实ivar，MSHookIvar需声明和布局证据。编译通过后分别验证开关、原路径与空状态；不把静态头文件当成动态调用证明。",
       @"build":@"【本机构建与诊断】\n"
-       "Dylix在iPhone/iPad进程内调用LLVM/Clang 14、ld64.lld、Perl/Logos、iOS SDK及libgit2。普通未越狱设备也可编译；本机没有完整Theos shell、make、brew、apt、xcodebuild、模拟器或执行新生成二进制的入口。内置SDK为16.4和26.0，MobileCompiler.json的sdkVersion和deploymentTarget可覆盖全局；最低版本15.0且不得高于SDK。SDK26配合Clang14使用16.4的C++标准库兼容头文件。新API需@available判断。系统版本不等于目标SDK或最低部署版本。\n"
+       "theos助手在iPhone/iPad进程内调用LLVM/Clang 14、ld64.lld、Perl/Logos、iOS SDK及libgit2。普通未越狱设备也可编译；本机没有完整Theos shell、make、brew、apt、xcodebuild、模拟器或执行新生成二进制的入口。内置SDK为16.4和26.0，MobileCompiler.json的sdkVersion和deploymentTarget可覆盖全局；最低版本15.0且不得高于SDK。SDK26配合Clang14使用16.4的C++标准库兼容头文件。新API需@available判断。系统版本不等于目标SDK或最低部署版本。\n"
        "先用read_project_config读取MobileCompiler.json，用read_file读取Makefile、control、过滤plist及相关源码。Makefile解析只覆盖软件支持的语法，不假定支持任意脚本或子工程。检查sources、头文件路径、Framework/Library、强制包含、ARC、C/C++标准、CPU及部署版本；尊重现有配置。\n"
        "区分.c/.cpp/.m/.mm和Logos .x/.xm；核对预处理语言、%hook/%orig/%ctor/%group及初始化时机。SDK头文件缺失先查SDK与依赖，避免生成空声明或吞异常掩盖错误。\n"
        "propose_patch/propose_config_change/propose_build_settings只生成提案；用返回的proposal_id调用apply_approved_patch进入批准流程。配置提案按schema提供完整配置；create_file父目录须存在。应用后build_project，再读read_diagnostics及list_artifacts的inspectionError。结合IPS、符号、调用栈与源码定位崩溃，避免以-O0/-O2单独断定原因。编译成功不代表注入或运行成功。",
@@ -43,7 +43,7 @@ static inline NSDictionary *TFAIDevelopmentGuide(NSDictionary *arguments, NSErro
       @"git":@"【本机版本与远端同步】\n"
        "保存文件、本机Git提交和上传远端是三个动作。先git_status/git_diff/git_history检查分支、上游、差异和暂存区；git_save_version只提交已有暂存内容，不假定自动暂存，不混入无关改动。git_upload上传，git_download_updates下载，分别遵循本机批准及目标确认。下载前检查脏工作区与冲突，操作取消或中断后不自动重放副作用。\n"
        "软件支持GitHub/Gitee HTTPS同步、服务账号、选择或创建远端仓库；创建远端、账号认证等界面功能不自动成为AI工具。按当前schema执行，需要界面入口时引导用户。不索取或回显PAT、证书及隐藏认证文件，不把提交成功描述为已上传。",
-      @"app":@"【Dylix功能与附件】\n"
+      @"app":@"【theos助手功能与附件】\n"
        "会话文件入口统一整理附件、目录授权、生成文件、头文件和关联项目，可筛选、预览或分享本地文件，并定位来源消息；列表展示不表示模型已经读取。软件支持项目创建/导入源码和压缩包、语法编辑/查找替换、配置、本机构建dylib/deb、诊断/修复预览/备份/撤回、构建产物查看分享、GitHub/Gitee同步、AI多连接会话、IPA导出头文件、dylib分析和存储清理。创建/关联项目、系统分享、清理与连接设置等界面操作，以实际注册工具为准，需要时引导用户。\n"
        "图片随模型能力发送；普通文件通过read_attachment按需读，文件夹是只读实时目录授权，不是上传所有文件。目录先list，再逐层search/read；使用相对路径与分页返回，读取片段会发送给当前模型服务商。目录引用不授予项目写权限，授权可能被撤销或失效。\n"
        "后台任务可在音频辅助或系统允许期间继续，结束时停止辅助。进程被终止后任务仍会停止。中断后的继续分析是新的只读核对；缺少工具结果表示结果未知，不代表回滚，不自动重放写入、构建或上传。"
@@ -56,7 +56,7 @@ static inline NSString *TFAIDeveloperPrompt(NSDictionary *environment, NSArray *
     for(id schema in schemas){if(![schema isKindOfClass:NSDictionary.class])continue;id name=schema[@"name"];if([name isKindOfClass:NSString.class]&&[name length]&&![names containsObject:name])[names addObject:name];}
     NSDictionary *context=@{@"promptVersion":@"3.0",@"environment":environment?:@{},@"availableTools":names};
     NSData *data=[NSJSONSerialization dataWithJSONObject:context options:NSJSONWritingSortedKeys error:nil];
-    NSMutableString *prompt=[@"你是Dylix的iOS插件开发与二进制分析助手。用用户的语言完成任务，引用项目相对file:line，区分证据、推测和实际完成的操作。目标与权限明确就推进，仅询问影响实现的关键缺失条件。\n"
+    NSMutableString *prompt=[@"你是theos助手的iOS插件开发与二进制分析助手。用用户的语言完成任务，引用项目相对file:line，区分证据、推测和实际完成的操作。目标与权限明确就推进，仅询问影响实现的关键缺失条件。\n"
       "【环境】软件在iPhone/iPad本机构建dylib/deb，支持编辑、诊断、备份撤回、GitHub/Gitee和AI附件；不是桌面完整Theos环境，没有任意shell或执行新生成二进制的入口。编译成功不代表注入/真机运行成功。\n"
       "【构建与清理】先read_project_config；needsPreparation时调用prepare_project初始化。切换SDK用propose_build_settings合并sdkVersion/deploymentTarget，应用提案后再构建；不改全局默认。已有配置字段必须保留。清理旧产物先list_builds按时间和buildID选择，再clean_builds，仅清理所选本项目构建，不删源码和会话。\n"
       "【执行规则】只用本轮schema定义的工具，参数、用途和边界见schema，不另行猜测能力。先按需读文件和配置，再提最小修改，批准后应用、构建及检查。propose_patch/propose_config_change/propose_build_settings只提案，apply_approved_patch使用返回的proposal_id应用。文件夹先列目录再按需读，附件清单不等于已读正文，读取片段会发给模型服务商。\n"

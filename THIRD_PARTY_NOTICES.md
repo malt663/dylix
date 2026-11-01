@@ -26,9 +26,9 @@
 ## 本地修改与归属
 
 - REipa 固定上游 revision `b0d4759451ed20796892a059fa53d9dbb130af61`，包含本地边界检查/大镜像/增量导出修改；详情见 Vendor/REipa/README-TweakForge.md，源码完整保留。
-- libgit2 完整来源及 COPYING 在 Vendor/libgit2；其 GPLv2 linking exception 不将 Dylix 主程序强制改为 GPLv2。
+- libgit2 完整来源及 COPYING 在 Vendor/libgit2；其 GPLv2 linking exception 不将 theos助手 主程序强制改为 GPLv2。
 - Logos 的实际源码在 Resources/logos，使用 GPL-3.0-or-later。
-- 原生 AI 交互研究参考不代表复制代码或链接其运行时，见 AI-Research.txt；另参考 OpenMinis（https://github.com/OpenMinis/OpenMinis）的流式呈现与生命周期设计，Dylix 使用自己的 UIKit 实现。
+- 原生 AI 交互研究参考不代表复制代码或链接其运行时，见 AI-Research.txt；另参考 OpenMinis（https://github.com/OpenMinis/OpenMinis）的流式呈现与生命周期设计，theos助手 使用自己的 UIKit 实现。
 - 仓库中的 Apple SDK 16.4 / 26.0 与 Apple 系统 framework 保留 Apple 条款，不属于本项目 GPL 许可授权范围。
 - 未分发个人 FLEX 测试样例、参考 macOS Perl 副本、设备日志、模型会话或用户附件。
 

@@ -24,7 +24,7 @@ app = ROOT / 'build' / platform / 'TheosMobileCompiler.app'
 if app.exists():
     shutil.rmtree(app)
 app.mkdir(parents=True, exist_ok=True)
-shutil.copyfile(ROOT / 'LICENSE', app / 'Dylix-LICENSE.txt')
+shutil.copyfile(ROOT / 'LICENSE', app / 'theos助手-LICENSE.txt')
 frameworks = app / 'Frameworks'
 frameworks.mkdir(exist_ok=True)
 names = ['ios_system', 'libLLVM', 'clang', 'lld'] + ([] if args.simulator else ['perl'])
@@ -80,10 +80,10 @@ if args.profile:
     shutil.copy2(args.profile, app / 'embedded.mobileprovision')
 info = {
     'CFBundleExecutable': 'TheosMobileCompiler', 'CFBundleIdentifier': 'com.xuegao.theosmobilecompiler',
-    'CFBundleName': 'Dylix', 'CFBundleDisplayName': 'Dylix',
+    'CFBundleName': 'theos助手', 'CFBundleDisplayName': 'theos助手',
     'NSCameraUsageDescription': '拍摄照片作为您选择发送给模型的参考附件。', 'CFBundlePackageType': 'APPL', 'CFBundleShortVersionString': '1.0.4', 'CFBundleVersion': '135',
-    'CFBundleDocumentTypes': [{'CFBundleTypeName':'Dylix Files','CFBundleTypeRole':'Editor','LSHandlerRank':'Alternate','LSItemContentTypes':['public.data','public.archive','public.source-code']}],
-    'CFBundleURLTypes': [{'CFBundleURLName':'Dylix Incoming','CFBundleURLSchemes':['dylix', 'tweakforge']}],
+    'CFBundleDocumentTypes': [{'CFBundleTypeName':'theos助手 Files','CFBundleTypeRole':'Editor','LSHandlerRank':'Alternate','LSItemContentTypes':['public.data','public.archive','public.source-code']}],
+    'CFBundleURLTypes': [{'CFBundleURLName':'theos助手 Incoming','CFBundleURLSchemes':['dylix', 'tweakforge']}],
     'BGTaskSchedulerPermittedIdentifiers': ['com.xuegao.theosmobilecompiler.ai.processing'],
     'UIBackgroundModes': ['processing', 'audio'],
     'NSSupportsLiveActivities': True,
@@ -162,7 +162,7 @@ share = app / 'PlugIns/TweakForgeShare.appex'
 share.mkdir(parents=True, exist_ok=True)
 share_info = {
  'CFBundleExecutable':'TweakForgeShare','CFBundleIdentifier':'com.xuegao.theosmobilecompiler.share',
- 'CFBundleName':'TweakForgeShare','CFBundleDisplayName':'Dylix','CFBundlePackageType':'XPC!',
+ 'CFBundleName':'TweakForgeShare','CFBundleDisplayName':'theos助手','CFBundlePackageType':'XPC!',
  'CFBundleShortVersionString':'1.0.4','CFBundleVersion':info['CFBundleVersion'],
  'MinimumOSVersion':'15.0','UIDeviceFamily':[1,2],
  'CFBundleSupportedPlatforms':info['CFBundleSupportedPlatforms'],
@@ -187,7 +187,7 @@ subprocess.run(['codesign','--force','--sign',args.identity,*sign_flags,str(shar
 subprocess.run(['python3',str(ROOT / 'scripts/build_live_activity.py'),'--app',str(app),'--build',info['CFBundleVersion'],'--identity',args.identity]+(['--simulator'] if args.simulator else []),check=True)
 subprocess.run(['codesign','--force','--sign',args.identity,*sign_flags,str(app)],check=True)
 if not args.simulator:
-    ipa = ROOT / 'build' / f"Dylix-{info['CFBundleShortVersionString']}-build{info['CFBundleVersion']}-unsigned.ipa"
+    ipa = ROOT / 'build' / f"theos助手-{info['CFBundleShortVersionString']}-build{info['CFBundleVersion']}-unsigned.ipa"
     with zipfile.ZipFile(ipa, 'w', zipfile.ZIP_DEFLATED) as out:
         for path in app.rglob('*'):
             if path.is_file(): out.write(path, pathlib.Path('Payload') / app.name / path.relative_to(app))

@@ -1,6 +1,6 @@
 <div align="center">
 
-# Dylix
+# theos助手
 
 **把插件开发工作台，放进口袋。**
 
@@ -16,7 +16,7 @@ iPhone / iPad 本机构建 · AI 开发助手 · 项目与 Git · 二进制工�
 
 ## 这是什么
 
-Dylix 是原生 iOS 插件开发工作台：在手机上管理源码、编辑代码、调用内嵌 Clang / LLD 和 Logos，并生成 dylib 与 deb。AI 可以按权限读取头文件、解释代码、修改项目、检查构建结果；编译工作在设备本机完成。
+theos助手 是原生 iOS 插件开发工作台：在手机上管理源码、编辑代码、调用内嵌 Clang / LLD 和 Logos，并生成 dylib 与 deb。AI 可以按权限读取头文件、解释代码、修改项目、检查构建结果；编译工作在设备本机完成。
 
 它使用进程内 LLVM 工具链，并非完整 Theos shell 环境。现有 Theos 工程会经过受支持的 Makefile / 配置解析；任意脚本、Xcode 工程和完整 make 语义并不等同于已支持。
 
@@ -37,9 +37,9 @@ Dylix 是原生 iOS 插件开发工作台：在手机上管理源码、编辑代
 ### 写代码，也管理整个项目
 
 <p align="center">
-  <img src="docs/images/projects.png" width="280" alt="Dylix 项目模板与包信息设置" />
+  <img src="docs/images/projects.png" width="280" alt="theos助手 项目模板与包信息设置" />
   &nbsp;&nbsp;
-  <img src="docs/images/editor.png" width="280" alt="Dylix 原生源码编辑器" />
+  <img src="docs/images/editor.png" width="280" alt="theos助手 原生源码编辑器" />
 </p>
 
 项目模板、最近项目、文件标签、语法着色与编辑快捷栏。当前架构、SDK 和最低系统版本直接显示在编辑器底部。
@@ -69,7 +69,7 @@ Dylix 是原生 iOS 插件开发工作台：在手机上管理源码、编辑代
 <p align="center">
   <img src="docs/images/git.png" width="280" alt="本地 Git 变更、暂存与提交" />
   &nbsp;&nbsp;
-  <img src="docs/images/settings.png" width="280" alt="Dylix 设置与开源许可证入口" />
+  <img src="docs/images/settings.png" width="280" alt="theos助手 设置与开源许可证入口" />
 </p>
 
 本地 Git 管理变更、提交与历史，远程支持 GitHub / Gitee。工作台集中提供编辑器、存储空间、开发工具和许可证入口。
@@ -89,9 +89,9 @@ rustup target add aarch64-apple-ios x86_64-apple-ios
 python3 scripts/build.py --sdk-root LocalSDKs/iPhoneOS26.0.sdk
 ```
 
-输出 `build/Dylix-1.0.4-build135-unsigned.ipa`。安装前使用自己的证书/适用安装方式处理主 App、Share Extension 和嵌套 framework 签名。仓库不包含个人证书、描述文件或共享 API 密钥。
+输出 `build/theos助手-1.0.4-build135-unsigned.ipa`。安装前使用自己的证书/适用安装方式处理主 App、Share Extension 和嵌套 framework 签名。仓库不包含个人证书、描述文件或共享 API 密钥。
 
-**两个 SDK 角色不同**：`--sdk-root` 决定 Dylix App 自身的构建 SDK；内嵌插件构建 SDK 可选 16.4 / 26.0，默认仍为 **SDK 16.4 + 最低 iOS 15**。
+**两个 SDK 角色不同**：`--sdk-root` 决定 theos助手 App 自身的构建 SDK；内嵌插件构建 SDK 可选 16.4 / 26.0，默认仍为 **SDK 16.4 + 最低 iOS 15**。
 
 完整环境配置、模拟器构建、依赖来源、测试与签名说明见 [docs/BUILDING.md](docs/BUILDING.md)。仓库附带 SDK 16.4 与 26.0 构建输入；Apple SDK 保留 Apple 原有条款，不适用本项目 GPL。工具链通过下载脚本自动还原。
 
@@ -107,10 +107,10 @@ IPA 导出依据 Objective-C 元数据，不等于还原源码。加密镜像会
 
 ## 许可证与致谢
 
-**开发协作**：本项目由 Xuegao 主导开发，OpenAI Codex / ChatGPT 辅助实现、调试与文档编写。
+**开发协作**：本项目由 nova 主导开发，OpenAI Codex / ChatGPT 辅助实现、调试与文档编写。
 
-Dylix 原创代码与修改采用 **GNU General Public License v3.0 or later（GPL-3.0-or-later）**，完整条款见 [LICENSE](LICENSE)。分发修改版或二进制时，请遵循 GPL 对相应源码、许可文本和必要构建材料的要求；软件按现状提供，不附带担保。
+theos助手 原创代码与修改采用 **GNU General Public License v3.0 or later（GPL-3.0-or-later）**，完整条款见 [LICENSE](LICENSE)。分发修改版或二进制时，请遵循 GPL 对相应源码、许可文本和必要构建材料的要求；软件按现状提供，不附带担保。
 
 第三方代码保留原许可证，详见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。感谢 LLVM / Clang / LLD、ios_system、Perl、Theos Logos、libgit2、REipa、MBProgressHUD、highlight.js、diff2html 等项目。第三方许可不因本项目采用 GPL 而被替换。
 
-欢迎通过 [贡献说明](CONTRIBUTING.md) 一起改进 Dylix。
+欢迎通过 [贡献说明](CONTRIBUTING.md) 一起改进 theos助手。

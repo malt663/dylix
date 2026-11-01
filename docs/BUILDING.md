@@ -1,4 +1,4 @@
-# 构建 Dylix
+# 构建 theos助手
 
 ## 目录与前提
 
@@ -18,7 +18,7 @@ LLVM/Clang/LLD 14 来源为 holzschu/llvm-project；ios_system 3.0.5、Perl 5.34
 
 ## 2. Apple SDK
 
-仓库包含两套 SDK 输入：`Resources/SDK`（16.4）和 `LocalSDKs/iPhoneOS26.0.sdk`（26.0），拉取源码后直接使用。Apple SDK 保留原有条款，不适用 Dylix 的 GPL 许可。
+仓库包含两套 SDK 输入：`Resources/SDK`（16.4）和 `LocalSDKs/iPhoneOS26.0.sdk`（26.0），拉取源码后直接使用。Apple SDK 保留原有条款，不适用 theos助手 的 GPL 许可。
 
 如需使用其他本地副本，可以通过 `DYLIX_SDK_16_4` 与 `DYLIX_SDK_26_0` 环境变量覆盖路径。构建时校验 SDKSettings.plist 的 Version 并压缩内嵌；插件默认仍为 SDK16.4、最低 iOS15。
 
@@ -35,7 +35,7 @@ CMake 可用 `TMC_CMAKE` 指定可执行文件。Rust 桥使用 Cargo.lock 固�
 ## 4. 构建
 
 ```sh
-# 真机 App，以 iOS26 SDK 编译 Dylix 本身
+# 真机 App，以 iOS26 SDK 编译 theos助手 本身
 python3 scripts/build.py --sdk-root LocalSDKs/iPhoneOS26.0.sdk
 # 模拟器，当前实现为 x86_64
 python3 scripts/build.py --simulator
@@ -53,7 +53,7 @@ python3 scripts/test_package_schemes.py
 
 完整测试入口见 scripts/、tests/。iOS 原生回归通过模拟器启动参数运行，例如 `--ai-render122-test`、`--ai-workspace133-test`、`--ai-v2-test`；测试使用本地样本和保留的 `.invalid` 域名拦截，不需要真实模型密钥。模拟器测试必须在一次性测试安装中执行，部分夹具会重置它们自己的样例会话。
 
-部分历史压力脚本引用未随开源版分发的个人 FLEX 测试工程。它不是 Dylix 的运行依赖，请自行提供相应测试夹具或只运行内置基础样例；仓库不包含其代码和二进制。
+部分历史压力脚本引用未随开源版分发的个人 FLEX 测试工程。它不是 theos助手 的运行依赖，请自行提供相应测试夹具或只运行内置基础样例；仓库不包含其代码和二进制。
 
 ## 发布材料
 

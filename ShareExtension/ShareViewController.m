@@ -25,12 +25,12 @@
 @end
 @implementation ShareViewController
 - (void)viewDidLoad{
- [super viewDidLoad];self.view.backgroundColor=UIColor.systemGroupedBackgroundColor;self.title=@"存入 Dylix";
+ [super viewDidLoad];self.view.backgroundColor=UIColor.systemGroupedBackgroundColor;self.title=@"存入 theos助手";
  UIStackView *stack=[UIStackView new];stack.axis=UILayoutConstraintAxisVertical;stack.alignment=UIStackViewAlignmentCenter;stack.spacing=18;stack.translatesAutoresizingMaskIntoConstraints=NO;
  UIImageView *image=[[UIImageView alloc]initWithImage:[UIImage systemImageNamed:@"tray.and.arrow.down"]];self.receiveIcon=image;image.hidden=YES;image.tintColor=UIColor.secondaryLabelColor;[stack addArrangedSubview:image];
  self.spinner=[[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleMedium];[self.spinner startAnimating];[stack addArrangedSubview:self.spinner];
  self.status=[UILabel new];self.status.text=@"正在接收文件…";self.status.hidden=YES;self.status.numberOfLines=0;self.status.textAlignment=NSTextAlignmentCenter;self.status.font=[UIFont preferredFontForTextStyle:UIFontTextStyleBody];[stack addArrangedSubview:self.status];
- self.openButton=[UIButton buttonWithType:UIButtonTypeSystem];UIButtonConfiguration *openConfig=UIButtonConfiguration.filledButtonConfiguration;openConfig.title=@"打开 Dylix";openConfig.image=[UIImage systemImageNamed:@"arrow.up.forward.app"];openConfig.imagePadding=8;self.openButton.configuration=openConfig;[self.openButton addTarget:self action:@selector(openHost) forControlEvents:UIControlEventTouchUpInside];self.openButton.hidden=YES;[stack addArrangedSubview:self.openButton];
+ self.openButton=[UIButton buttonWithType:UIButtonTypeSystem];UIButtonConfiguration *openConfig=UIButtonConfiguration.filledButtonConfiguration;openConfig.title=@"打开 theos助手";openConfig.image=[UIImage systemImageNamed:@"arrow.up.forward.app"];openConfig.imagePadding=8;self.openButton.configuration=openConfig;[self.openButton addTarget:self action:@selector(openHost) forControlEvents:UIControlEventTouchUpInside];self.openButton.hidden=YES;[stack addArrangedSubview:self.openButton];
  self.exportButton=[UIButton buttonWithType:UIButtonTypeSystem];UIButtonConfiguration *config=UIButtonConfiguration.filledButtonConfiguration;config.title=@"选择保存位置";config.image=[UIImage systemImageNamed:@"folder"];config.imagePadding=8;config.cornerStyle=UIButtonConfigurationCornerStyleMedium;self.exportButton.configuration=config;[self.exportButton addTarget:self action:@selector(exportFiles) forControlEvents:UIControlEventTouchUpInside];self.exportButton.hidden=YES;[stack addArrangedSubview:self.exportButton];
  self.done=[UIButton buttonWithType:UIButtonTypeSystem];[self.done setTitle:@"完成" forState:UIControlStateNormal];[self.done addTarget:self action:@selector(doneShare) forControlEvents:UIControlEventTouchUpInside];self.done.hidden=YES;[stack addArrangedSubview:self.done];UIButton *diagnostic=[UIButton buttonWithType:UIButtonTypeSystem];self.diagnostic=diagnostic;diagnostic.hidden=YES;[diagnostic setTitle:[NSString stringWithFormat:@"接收诊断 · %@",NSBundle.mainBundle.infoDictionary[@"CFBundleVersion"]?:@""] forState:UIControlStateNormal];diagnostic.titleLabel.font=[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];[diagnostic addTarget:self action:@selector(showDiagnostics) forControlEvents:UIControlEventTouchUpInside];[stack addArrangedSubview:diagnostic];
  [self.view addSubview:stack];[NSLayoutConstraint activateConstraints:@[[stack.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor],[stack.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor constant:28],[stack.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor constant:-28]]];[self receive];
@@ -46,7 +46,7 @@
   self.launcher.updated=^(NSDictionary *snapshot){typeof(self) strong=weak;if(!strong||strong.finishing)return;NSUInteger generation=++strong.presentationGeneration;NSString *state=snapshot[@"state"];BOOL opening=[state isEqual:@"opening"];strong.openButton.enabled=!opening;strong.done.enabled=!opening;if([state isEqual:@"opened"]){[strong doneShare];return;}if(opening){strong.status.hidden=YES;strong.receiveIcon.hidden=YES;strong.diagnostic.hidden=YES;strong.openButton.hidden=YES;strong.done.hidden=YES;[strong.spinner startAnimating];return;}
    // Some systems return NO even while the main app is being opened. Avoid
    // flashing an error during that transition; keep files queued either way.
-   dispatch_after(dispatch_time(DISPATCH_TIME_NOW,1500*NSEC_PER_MSEC),dispatch_get_main_queue(),^{typeof(self) current=weak;if(!current||current.finishing||current.presentationGeneration!=generation||![current.launcher.snapshot[@"state"] isEqual:@"failed"])return;[current showRecovery];current.openButton.hidden=NO;current.done.hidden=NO;current.status.text=@"文件已接收。若尚未进入 Dylix，可点击打开，或稍后从桌面进入。";});
+   dispatch_after(dispatch_time(DISPATCH_TIME_NOW,1500*NSEC_PER_MSEC),dispatch_get_main_queue(),^{typeof(self) current=weak;if(!current||current.finishing||current.presentationGeneration!=generation||![current.launcher.snapshot[@"state"] isEqual:@"failed"])return;[current showRecovery];current.openButton.hidden=NO;current.done.hidden=NO;current.status.text=@"文件已接收。若尚未进入 theos助手，可点击打开，或稍后从桌面进入。";});
   };
  }
  [self.launcher openIncomingJob:self.readyJob];
@@ -57,10 +57,10 @@
  UIDocumentPickerViewController *picker=[[UIDocumentPickerViewController alloc]initForExportingURLs:self.exportURLs asCopy:YES];picker.delegate=self;picker.shouldShowFileExtensions=YES;picker.modalPresentationStyle=UIModalPresentationFormSheet;
  [self presentViewController:picker animated:YES completion:nil];
 }
-- (void)documentPickerWasCancelled:(UIDocumentPickerViewController *)controller{self.status.text=@"尚未保存，文件仍在这里。\n\n请选择「我的 iPhone → Dylix」并保存；随后打开 Dylix 自动识别。";}
+- (void)documentPickerWasCancelled:(UIDocumentPickerViewController *)controller{self.status.text=@"尚未保存，文件仍在这里。\n\n请选择「我的 iPhone → theos助手」并保存；随后打开 theos助手 自动识别。";}
 - (void)documentPicker:(UIDocumentPickerViewController *)controller didPickDocumentsAtURLs:(NSArray<NSURL *> *)urls{
  if(!urls.count)return;
- [self showRecovery];self.status.text=@"文件已保存\n\n若保存于「我的 iPhone → Dylix」，打开 App 后会自动识别。\n\n保存到其他位置时，可在 App 中选择导入，或在「文件」中选择“用 Dylix 打开”。";self.exportButton.hidden=YES;[self.done setTitle:@"完成" forState:UIControlStateNormal];
+ [self showRecovery];self.status.text=@"文件已保存\n\n若保存于「我的 iPhone → theos助手」，打开 App 后会自动识别。\n\n保存到其他位置时，可在 App 中选择导入，或在「文件」中选择“用 theos助手 打开”。";self.exportButton.hidden=YES;[self.done setTitle:@"完成" forState:UIControlStateNormal];
 }
 - (void)receive{
  NSURL *group=TFShareContainer();
@@ -92,7 +92,7 @@
   if(!e&&direct){NSURL *ready=[pending URLByAppendingPathComponent:job isDirectory:YES];[NSFileManager.defaultManager moveItemAtURL:staging toURL:ready error:&e];}
   if(e){[NSFileManager.defaultManager removeItemAtURL:staging error:nil];[self showRecovery];self.status.text=e.localizedDescription;self.done.hidden=NO;return;}
   if(direct){[self.spinner startAnimating];self.readyJob=job;if(self.appeared)[self openHost];return;}
-  else{[self showRecovery];self.exportURLs=exports;self.status.text=[NSString stringWithFormat:@"已准备 %lu 个文件\n\n选择「我的 iPhone → Dylix」保存，再打开 App 自动识别。\n\n此方式适用于普通证书安装，无需共享组权限。",(unsigned long)self.files];self.exportButton.hidden=NO;[self.done setTitle:@"取消接收" forState:UIControlStateNormal];}
+  else{[self showRecovery];self.exportURLs=exports;self.status.text=[NSString stringWithFormat:@"已准备 %lu 个文件\n\n选择「我的 iPhone → theos助手」保存，再打开 App 自动识别。\n\n此方式适用于普通证书安装，无需共享组权限。",(unsigned long)self.files];self.exportButton.hidden=NO;[self.done setTitle:@"取消接收" forState:UIControlStateNormal];}
   self.done.hidden=NO;
  });
 }
